@@ -10,7 +10,6 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
     private String description;
     private Integer preptime;
     private Integer cookTime;
@@ -22,19 +21,36 @@ public class Recipe {
     // (POR DEFECTO) EN LA BBDD SE MOSTRARA COMO 1,2,3
     // EN VEZ DE EASY, MODERATE, HARD
     private Difficulty difficulty;
-    private Byte[] image;
-
+    private byte[] image;
     @OneToOne(cascade = CascadeType.ALL)
     private Note note;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private List<Ingredient> ingredients;
-
     @ManyToMany
     @JoinTable(name = "recipes_categories",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
+
+    public Recipe() {
+    }
+
+    public Recipe(String description, Integer preptime, Integer cookTime, Integer servings,
+                  String source, String url, String directions, Difficulty difficulty,
+                  byte[] image, Note note, List<Ingredient> ingredients, List<Category> categories) {
+        this.description = description;
+        this.preptime = preptime;
+        this.cookTime = cookTime;
+        this.servings = servings;
+        this.source = source;
+        this.url = url;
+        this.directions = directions;
+        this.difficulty = difficulty;
+        this.image = image;
+        this.note = note;
+        this.ingredients = ingredients;
+        this.categories = categories;
+    }
 
     public Long getId() {
         return id;
@@ -108,11 +124,11 @@ public class Recipe {
         this.difficulty = difficulty;
     }
 
-    public Byte[] getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(Byte[] image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
