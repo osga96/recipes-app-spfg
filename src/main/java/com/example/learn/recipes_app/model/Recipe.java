@@ -1,6 +1,7 @@
 package com.example.learn.recipes_app.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -139,7 +140,19 @@ public class Recipe {
     }
 
     public void setNote(Note note) {
+        note.setRecipe(this);
         this.note = note;
+    }
+
+    public Recipe addIngredient(Ingredient ingredient) {
+        ingredient.setRecipe(this);
+        if (this.ingredients != null) {
+            this.ingredients.add(ingredient);
+        } else {
+            this.ingredients = new ArrayList<>();
+            this.ingredients.add(ingredient);
+        }
+        return this;
     }
 
     public List<Ingredient> getIngredients() {

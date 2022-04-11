@@ -96,15 +96,10 @@ public class BootstrapDataLoader implements ApplicationListener<ContextRefreshed
 
         unitOfMeasureRepository.save(piece);
 
-        BigDecimal bigDecimal = new BigDecimal(2);
-
-        Ingredient avocados = new Ingredient("Avocado", bigDecimal, guacamole, piece);
+        Ingredient avocados = new Ingredient("Avocado", new BigDecimal(2), guacamole, piece);
         piece.setIngredient(avocados);
 
-        List<Ingredient> guacamoleIngredients = new ArrayList<>();
-        guacamoleIngredients.add(avocados);
-
-        guacamole.setIngredients(guacamoleIngredients);
+        guacamole.addIngredient(avocados);
 
         Category categoryAvocado = new Category();
         categoryAvocado.setCategoryName("IDK");
