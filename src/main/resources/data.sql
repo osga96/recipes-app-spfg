@@ -9,3 +9,6 @@ INSERT INTO unit_of_measure (unit_of_measure) VALUES ('Pinch');
 INSERT INTO unit_of_measure (unit_of_measure) VALUES ('Ounce');
 INSERT INTO unit_of_measure (unit_of_measure) VALUES ('Liter');
 INSERT INTO unit_of_measure (unit_of_measure) VALUES ('Mililiter');
+
+/*ALTER TABLE recipe ALTER COLUMN directions VARCHAR (5000);
+ALTER TABLE recipe ALTER COLUMN image VARBINARY (75000);*/

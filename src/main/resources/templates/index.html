@@ -11,5 +11,9 @@
     <p th:text="Testing"></p>
     <p th:text="testsda112"></p>
 
+    <div th:each="recipe : ${recipes}">
+        <p th:text="${recipe.getDescription()}"></p>
+    </div>
+
 </body>
 </html>

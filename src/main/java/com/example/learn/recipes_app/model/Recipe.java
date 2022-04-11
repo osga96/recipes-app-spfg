@@ -16,15 +16,17 @@ public class Recipe {
     private Integer servings;
     private String source;
     private String url;
+    @Lob
     private String directions;
     @Enumerated(value = EnumType.STRING) // SI SE DEJA ORDINAL
     // (POR DEFECTO) EN LA BBDD SE MOSTRARA COMO 1,2,3
     // EN VEZ DE EASY, MODERATE, HARD
     private Difficulty difficulty;
+    @Lob
     private byte[] image;
     @OneToOne(cascade = CascadeType.ALL)
     private Note note;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "recipe")
     private List<Ingredient> ingredients;
     @ManyToMany
     @JoinTable(name = "recipes_categories",
