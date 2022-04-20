@@ -3,10 +3,12 @@ package com.example.learn.recipes_app.controller;
 import com.example.learn.recipes_app.repositories.CategoryRepository;
 import com.example.learn.recipes_app.repositories.UnitOfMeasureRepository;
 import com.example.learn.recipes_app.services.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Slf4j
 @Controller
 public class IndexController {
 

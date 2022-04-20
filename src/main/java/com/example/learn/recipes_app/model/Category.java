@@ -1,8 +1,11 @@
 package com.example.learn.recipes_app.model;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
 
+@Data
 @Entity
 public class Category {
 
@@ -12,30 +15,7 @@ public class Category {
     private Long id;
 
     private String categoryName;
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
     private List<Recipe> recipes;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public List<Recipe> getRecipes() {
-        return recipes;
-    }
-
-    public void setRecipes(List<Recipe> recipes) {
-        this.recipes = recipes;
-    }
 }

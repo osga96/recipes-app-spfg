@@ -5,6 +5,7 @@ import com.example.learn.recipes_app.repositories.CategoryRepository;
 import com.example.learn.recipes_app.repositories.IngredientRepository;
 import com.example.learn.recipes_app.repositories.RecipeRepository;
 import com.example.learn.recipes_app.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -19,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class BootstrapDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -33,8 +35,6 @@ public class BootstrapDataLoader implements ApplicationListener<ContextRefreshed
         this.categoryRepository = categoryRepository;
         this.ingredientRepository = ingredientRepository;
     }
-
-
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -118,6 +118,8 @@ public class BootstrapDataLoader implements ApplicationListener<ContextRefreshed
 
         recipeRepository.save(guacamole);
         ingredientRepository.save(avocados);
+
+        System.out.println(guacamole);
 
     }
 }
