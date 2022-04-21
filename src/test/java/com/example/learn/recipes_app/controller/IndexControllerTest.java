@@ -8,8 +8,8 @@ import com.example.learn.recipes_app.services.impl.RecipeServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 
@@ -56,14 +56,20 @@ class IndexControllerTest {
     @Test
     void getView() {
 
+        //given recipes
+        when(recipeRepository.findAll()).thenReturn(recipes);
+        ArgumentCaptor<List<Recipe>> argumentCaptor = ArgumentCaptor.forClass(List.class);
+
+        //when
         String pageName = indexController.getView(model);
 
+        //then
         assertEquals("index", pageName);
         verify(recipeRepository, times(1)).findAll();
-        verify(model, times(1)).addAttribute(eq("recipes"), anyList());
-
-        /*when(recipeRepository.findAll()).thenReturn(recipes);
-        model.addAttribute("theRecipes", recipeService.getRecipes());
+        verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
+        List<Recipe> recipesList = argumentCaptor.getValue();
+        assertEquals(2, recipesList.size());
+        /*model.addAttribute("theRecipes", recipeService.getRecipes());
         String pageName = "index";
         assertEquals("index", pageName);
         assertEquals(recipes, model.getAttribute("theRecipes"));*/
