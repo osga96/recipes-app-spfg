@@ -6,6 +6,7 @@ import com.example.learn.recipes_app.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
@@ -38,6 +39,30 @@ public class IndexController {
     public String getTestViewCategory(Model model) {
         model.addAttribute("categorySpanish", categoryRepository.findByCategoryName("Spanish"));
         return "test/category";
+    }
+
+    // este sirve como /recipe?id=id
+    @RequestMapping("/recipe")
+    public String getRecipeById(Long id, Model model) {
+        model.addAttribute("recipe", recipeService.getRecipeById(id));
+        return "test/recipe";
+    }
+
+    // este sirve como /recipe/id
+    @RequestMapping("/recipe/{id}")
+    public String getRecipeByIdUrl(@PathVariable String id, Model model) {
+
+        try {
+
+            model.addAttribute("recipe", recipeService.getRecipeById(Long.valueOf(id)));
+
+        } catch (NumberFormatException nfe) {
+
+            model.addAttribute("errorMsg", nfe);
+            return "error/message";
+        }
+
+        return "test/recipe";
     }
 
 }
