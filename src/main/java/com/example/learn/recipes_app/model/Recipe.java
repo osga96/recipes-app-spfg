@@ -15,7 +15,7 @@ public class Recipe {
     @Column(name = "id", nullable = false)
     private Long id;
     private String description;
-    private Integer preptime;
+    private Integer prepTime;
     private Integer cookTime;
     private Integer servings;
     private String source;
@@ -42,11 +42,11 @@ public class Recipe {
     }
 
     @Builder
-    public Recipe(String description, Integer preptime, Integer cookTime, Integer servings,
+    public Recipe(String description, Integer prepTime, Integer cookTime, Integer servings,
                   String source, String url, String directions, Difficulty difficulty,
                   byte[] image, Note note, List<Ingredient> ingredients, List<Category> categories) {
         this.description = description;
-        this.preptime = preptime;
+        this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.servings = servings;
         this.source = source;

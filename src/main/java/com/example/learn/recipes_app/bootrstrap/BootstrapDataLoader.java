@@ -41,8 +41,8 @@ public class BootstrapDataLoader implements ApplicationListener<ContextRefreshed
         try {
             bootstrapRecipesData();
         } catch (IOException e) {
-            System.out.println("Errorrr");
-            System.out.println(e.getMessage());
+            log.error("Errorrr");
+            log.error(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -53,7 +53,7 @@ public class BootstrapDataLoader implements ApplicationListener<ContextRefreshed
 
         guacamole.setDescription("The word \"guacamole\" and the dip, are both originally from Mexico, where avocados have been cultivated for thousands of years. The name is derived from two Aztec Nahuatl words—ahuacatl (avocado) and molli (sauce).\n" +
                 "\n");
-        guacamole.setPreptime(10);
+        guacamole.setPrepTime(10);
         guacamole.setCookTime(0);
         guacamole.setServings(3);
         guacamole.setSource("Simply Recipes");
@@ -124,11 +124,11 @@ public class BootstrapDataLoader implements ApplicationListener<ContextRefreshed
         recipeRepository.save(guacamole);
         ingredientRepository.save(avocados);
 
-        System.out.println(guacamole);
+        log.info(guacamole.toString());
 
         Recipe recipe2 = Recipe.builder()
                 .description("Croquetas!")
-                .preptime(12)
+                .prepTime(12)
                 .cookTime(60)
                 .servings(20)
                 .source("Personal experience")
