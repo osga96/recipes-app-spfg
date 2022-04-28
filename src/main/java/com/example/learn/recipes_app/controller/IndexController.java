@@ -1,13 +1,15 @@
 package com.example.learn.recipes_app.controller;
 
+import com.example.learn.recipes_app.commands.RecipeCommand;
+import com.example.learn.recipes_app.model.Recipe;
 import com.example.learn.recipes_app.repositories.CategoryRepository;
+import com.example.learn.recipes_app.repositories.RecipeRepository;
 import com.example.learn.recipes_app.repositories.UnitOfMeasureRepository;
 import com.example.learn.recipes_app.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
@@ -16,11 +18,13 @@ public class IndexController {
     private final UnitOfMeasureRepository unitOfMeasureRepository;
     private final CategoryRepository categoryRepository;
     private final RecipeService recipeService;
+    private final RecipeRepository recipeRepository;
 
-    public IndexController(UnitOfMeasureRepository unitOfMeasureRepository, CategoryRepository categoryRepository, RecipeService recipeService) {
+    public IndexController(UnitOfMeasureRepository unitOfMeasureRepository, CategoryRepository categoryRepository, RecipeService recipeService, RecipeRepository recipeRepository) {
         this.unitOfMeasureRepository = unitOfMeasureRepository;
         this.categoryRepository = categoryRepository;
         this.recipeService = recipeService;
+        this.recipeRepository = recipeRepository;
     }
 
     @RequestMapping({"","/","/index"})

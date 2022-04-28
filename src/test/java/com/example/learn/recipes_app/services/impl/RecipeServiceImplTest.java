@@ -1,5 +1,6 @@
 package com.example.learn.recipes_app.services.impl;
 
+import com.example.learn.recipes_app.converters.RecipeCommandToRecipe;
 import com.example.learn.recipes_app.model.Recipe;
 import com.example.learn.recipes_app.repositories.RecipeRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -21,11 +22,13 @@ class RecipeServiceImplTest {
     RecipeRepository recipeRepository;
     AutoCloseable autoCloseable;
     List<Recipe> recipes;
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
 
     @BeforeEach
     void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe);
         Recipe recipe1 = new Recipe();
         Recipe recipe2 = new Recipe();
         recipes = Arrays.asList(recipe1, recipe2);

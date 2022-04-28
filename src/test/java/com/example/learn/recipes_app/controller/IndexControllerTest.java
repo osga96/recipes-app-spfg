@@ -1,5 +1,6 @@
 package com.example.learn.recipes_app.controller;
 
+import com.example.learn.recipes_app.converters.RecipeCommandToRecipe;
 import com.example.learn.recipes_app.model.Recipe;
 import com.example.learn.recipes_app.repositories.CategoryRepository;
 import com.example.learn.recipes_app.repositories.RecipeRepository;
@@ -33,6 +34,8 @@ class IndexControllerTest {
     UnitOfMeasureRepository unitOfMeasureRepository;
     @Mock
     CategoryRepository categoryRepository;
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
     AutoCloseable autoCloseable;
     List<Recipe> recipes;
     @Mock
@@ -42,11 +45,11 @@ class IndexControllerTest {
     @BeforeEach
     void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe);
         Recipe recipe1 = new Recipe();
         Recipe recipe2 = new Recipe();
         recipes = Arrays.asList(recipe1, recipe2);
-        indexController = new IndexController(unitOfMeasureRepository, categoryRepository, recipeService);
+        indexController = new IndexController(unitOfMeasureRepository, categoryRepository, recipeService, recipeRepository);
     }
 
     @AfterEach
