@@ -65,4 +65,13 @@ public class IndexController {
         return "test/recipe";
     }
 
+    // este sirve como /recipe/id
+    @RequestMapping("/categories")
+    public String getCategories(Model model) {
+
+        model.addAttribute("categoriesList", categoryRepository.findAll());
+
+        return "categories/list";
+    }
+
 }

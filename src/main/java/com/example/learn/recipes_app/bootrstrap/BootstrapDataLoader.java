@@ -105,7 +105,12 @@ public class BootstrapDataLoader implements ApplicationListener<ContextRefreshed
         categoryAvocado.setCategoryName("IDK");
         categoryRepository.save(categoryAvocado);
 
+        Category categoryBreaded = new Category();
+        categoryAvocado.setCategoryName("Breaded");
+        categoryRepository.save(categoryBreaded);
+
         Optional<Category> category = categoryRepository.findByCategoryName("Fast food");
+        Optional<Category> category2 = categoryRepository.findByCategoryName("Breaded");
 
         if (category.isPresent()) {
 
@@ -120,6 +125,19 @@ public class BootstrapDataLoader implements ApplicationListener<ContextRefreshed
         ingredientRepository.save(avocados);
 
         System.out.println(guacamole);
+
+        Recipe recipe2 = Recipe.builder()
+                .description("Croquetas!")
+                .preptime(12)
+                .cookTime(60)
+                .servings(20)
+                .source("Personal experience")
+                .url("none")
+                .directions("lorem ipsum")
+                .difficulty(Difficulty.MODERATE)
+                .categories(Arrays.asList(category.orElse(null), category2.orElse(null))).build();
+
+        recipeRepository.save(recipe2);
 
     }
 }

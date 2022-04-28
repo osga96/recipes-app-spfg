@@ -14,7 +14,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-10 col-md-offset-3">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h1 class="panel-title">My recipes</h1>
@@ -26,11 +26,29 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Description</th>
+                                        <th>Prep time</th>
+                                        <th>Cook time</th>
+                                        <th>Servings</th>
+                                        <th>Source</th>
+                                        <th>Url</th>
+                                        <th>Categories</th>
+                                        <th>Ingredients</th>
                                     </tr>
                                 </thead>
                                 <tr th:each="recipe: ${recipes}">
                                     <td th:text="${recipe.id}">123</td>
-                                    <td th:text="${recipe.description}">Descrip3</td>
+                                    <td th:text="${recipe.description}">description</td>
+                                    <td th:text="${recipe.preptime}">preptime</td>
+                                    <td th:text="${recipe.cookTime}">cookTime</td>
+                                    <td th:text="${recipe.servings}">servings</td>
+                                    <td th:text="${recipe.source}">source</td>
+                                    <td th:text="${recipe.url}">url</td>
+                                    <td>
+                                        <p th:each="category: ${recipe.categories}" th:text="${category.categoryName}">category</p>
+                                    </td>
+                                    <td>
+                                        <p th:each="ingredient: ${recipe.ingredients}" th:text="${ingredient.description}">ingredientscription</p>
+                                    </td>
                                 </tr>
                             </table>
                         </div>

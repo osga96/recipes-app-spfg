@@ -41,6 +41,7 @@ public class Recipe {
     public Recipe() {
     }
 
+    @Builder
     public Recipe(String description, Integer preptime, Integer cookTime, Integer servings,
                   String source, String url, String directions, Difficulty difficulty,
                   byte[] image, Note note, List<Ingredient> ingredients, List<Category> categories) {

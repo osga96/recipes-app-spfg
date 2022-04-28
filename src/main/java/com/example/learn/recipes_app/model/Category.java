@@ -18,4 +18,10 @@ public class Category {
     @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
     private List<Recipe> recipes;
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", categoryName='" + categoryName + '\'';
+    }
 }
