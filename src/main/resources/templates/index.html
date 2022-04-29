@@ -33,8 +33,9 @@
                                         <th>Url</th>
                                         <th>Categories</th>
                                         <th>Ingredients</th>
-                                        <td><a href="#">View</a></td>
-                                        <td><a href="#">Update</a></td>
+                                        <td>View</td>
+                                        <td>Update</td>
+                                        <td>Delete</td>
                                     </tr>
                                 </thead>
                                 <tr th:each="recipe: ${recipes}">
@@ -53,6 +54,7 @@
                                     </td>
                                     <td><a href="#" th:href="@{'/recipe/'  + ${recipe.id} +'/show'}">View</a></td>
                                     <td><a href="#" th:href="@{'/recipe/'  + ${recipe.id} +'/update'}">Update</a></td>
+                                    <td><a href="#" th:href="@{'/recipe/'  + ${recipe.id} +'/delete'}">Delete</a></td>
                                 </tr>
                             </table>
                         </div>

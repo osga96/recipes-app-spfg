@@ -50,4 +50,10 @@ public class RecipeController {
         model.addAttribute("recipe", recipeService.getRecipeById(Long.valueOf(id)));
         return "recipes/recipeform";
     }
+
+    @GetMapping("/recipe/{id}/delete")
+    public String deleteRecipe(@PathVariable String id, Model model) {
+        recipeService.deleteRecipe(Long.valueOf(id));
+        return "recipes/deleted";
+    }
 }
