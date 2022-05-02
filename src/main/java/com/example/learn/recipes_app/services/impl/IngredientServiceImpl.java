@@ -3,7 +3,9 @@ package com.example.learn.recipes_app.services.impl;
 import com.example.learn.recipes_app.commands.IngredientCommand;
 import com.example.learn.recipes_app.converters.IngredientCommandToIngredient;
 import com.example.learn.recipes_app.converters.UnitOfMeasureCommandToUnitOfMeasure;
+import com.example.learn.recipes_app.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import com.example.learn.recipes_app.model.Ingredient;
+import com.example.learn.recipes_app.model.UnitOfMeasure;
 import com.example.learn.recipes_app.repositories.IngredientRepository;
 import com.example.learn.recipes_app.services.IngredientService;
 import com.example.learn.recipes_app.services.UnitOfMeasureService;
@@ -20,12 +22,14 @@ public class IngredientServiceImpl implements IngredientService {
     private final IngredientRepository ingredientRepository;
     private final IngredientCommandToIngredient ingredientCommandToIngredient;
     private final UnitOfMeasureCommandToUnitOfMeasure unitOfMeasureCommandToUnitOfMeasure;
+    private final UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
     private final UnitOfMeasureService unitOfMeasureService;
 
-    public IngredientServiceImpl(IngredientRepository ingredientRepository, IngredientCommandToIngredient ingredientCommandToIngredient, UnitOfMeasureCommandToUnitOfMeasure unitOfMeasureCommandToUnitOfMeasure, UnitOfMeasureService unitOfMeasureService) {
+    public IngredientServiceImpl(IngredientRepository ingredientRepository, IngredientCommandToIngredient ingredientCommandToIngredient, UnitOfMeasureCommandToUnitOfMeasure unitOfMeasureCommandToUnitOfMeasure, UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand, UnitOfMeasureService unitOfMeasureService) {
         this.ingredientRepository = ingredientRepository;
         this.ingredientCommandToIngredient = ingredientCommandToIngredient;
         this.unitOfMeasureCommandToUnitOfMeasure = unitOfMeasureCommandToUnitOfMeasure;
+        this.unitOfMeasureToUnitOfMeasureCommand = unitOfMeasureToUnitOfMeasureCommand;
         this.unitOfMeasureService = unitOfMeasureService;
     }
 
@@ -55,7 +59,12 @@ public class IngredientServiceImpl implements IngredientService {
     public Ingredient saveIngredientCommand(IngredientCommand ingredientCommand) {
         try {
 
-            unitOfMeasureService.saveUnitOfMeasure(unitOfMeasureCommandToUnitOfMeasure.convert(ingredientCommand.getUnitOfMeasure()));
+            Optional<UnitOfMeasure> unitOfMeasure = unitOfMeasureService.getUnitOfMeasureById(ingredientCommand.getUnitOfMeasure().getId());
+
+            if (unitOfMeasure.isPresent()) {
+                unitOfMeasureService.saveUnitOfMeasure(unitOfMeasure.get());
+                ingredientCommand.setUnitOfMeasure(unitOfMeasureToUnitOfMeasureCommand.convert(unitOfMeasure.get()));
+            }
 
             return ingredientRepository.save(Objects.requireNonNull(ingredientCommandToIngredient.convert(ingredientCommand)));
 

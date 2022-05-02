@@ -3,6 +3,7 @@ package com.example.learn.recipes_app.controller;
 import com.example.learn.recipes_app.commands.IngredientCommand;
 import com.example.learn.recipes_app.model.Ingredient;
 import com.example.learn.recipes_app.services.IngredientService;
+import com.example.learn.recipes_app.services.UnitOfMeasureService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,16 +19,18 @@ import java.util.Optional;
 public class IngredientController {
 
     private final IngredientService ingredientService;
+    private final UnitOfMeasureService unitOfMeasureService;
 
 
-    public IngredientController(IngredientService ingredientService) {
+    public IngredientController(IngredientService ingredientService, UnitOfMeasureService unitOfMeasureService) {
         this.ingredientService = ingredientService;
+        this.unitOfMeasureService = unitOfMeasureService;
     }
 
     @GetMapping("/ingredient/{ingredientId}/delete")
     public String getIngredientDetails(@PathVariable String ingredientId) {
         ingredientService.deleteIngredient(Long.valueOf(ingredientId));
-        return "/index";
+        return "ingredients/deleted";
     }
 
     @PostMapping("/ingredient/create")
@@ -44,6 +47,7 @@ public class IngredientController {
         if (ingredientOptional.isPresent()) {
 
             model.addAttribute("ingredient", ingredientOptional.get());
+            model.addAttribute("unitOfMeasureList", unitOfMeasureService.getAllUnitsOfMeasure());
 
         } else {
 

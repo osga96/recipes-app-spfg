@@ -24,12 +24,6 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-3 form-group">
-                                    <label>Ingredient Description:</label>
-                                    <input type="text" class="form-control" th:field="${ingredient.description}"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3 form-group">
                                     <label>Ingredient name:</label>
                                     <input type="text" class="form-control" th:field="*{description}"/>
                                 </div>
@@ -39,7 +33,14 @@
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Unit of measure:</label>
-                                    <input type="text" class="form-control" th:field="*{unitOfMeasure.unitOfMeasure}"/>
+                                    <select class="form-control" name="unitOfMeasure.id">
+                                        <option th:each="unitOfMeasure : ${unitOfMeasureList}"
+                                                th:value="${unitOfMeasure.id}"
+                                                th:selected="${unitOfMeasure.equals(ingredient.unitOfMeasure)}"
+                                                th:text="${unitOfMeasure.unitOfMeasure}">
+                                            Each</option>
+
+                                    </select>
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Linked recipe id:</label>
