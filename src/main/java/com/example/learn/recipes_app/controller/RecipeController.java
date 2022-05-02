@@ -1,12 +1,16 @@
 package com.example.learn.recipes_app.controller;
 
 import com.example.learn.recipes_app.commands.RecipeCommand;
+import com.example.learn.recipes_app.model.Ingredient;
 import com.example.learn.recipes_app.model.Recipe;
 import com.example.learn.recipes_app.repositories.RecipeRepository;
 import com.example.learn.recipes_app.services.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class RecipeController {
@@ -55,5 +59,18 @@ public class RecipeController {
     public String deleteRecipe(@PathVariable String id, Model model) {
         recipeService.deleteRecipe(Long.valueOf(id));
         return "recipes/deleted";
+    }
+
+    @GetMapping("/recipe/{recipeId}/ingredients")
+    public String listIngredients(@PathVariable String recipeId, Model model) {
+        Recipe recipe = recipeService.getRecipeById(Long.valueOf(recipeId));
+
+        if (recipe == null || recipe.getIngredients().isEmpty()) {
+            return "/error/message";
+        }
+
+        model.addAttribute("recipe", recipe);
+
+        return "ingredients/list";
     }
 }

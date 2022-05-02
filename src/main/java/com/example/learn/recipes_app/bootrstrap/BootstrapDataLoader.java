@@ -93,6 +93,7 @@ public class BootstrapDataLoader implements ApplicationListener<ContextRefreshed
 
         UnitOfMeasure piece = new UnitOfMeasure();
         piece.setUnitOfMeasure("piece");
+        piece.setId(1L);
 
         unitOfMeasureRepository.save(piece);
 
@@ -123,8 +124,6 @@ public class BootstrapDataLoader implements ApplicationListener<ContextRefreshed
 
         recipeRepository.save(guacamole);
         ingredientRepository.save(avocados);
-
-        log.info(guacamole.toString());
 
         Recipe recipe2 = Recipe.builder()
                 .description("Croquetas!")
