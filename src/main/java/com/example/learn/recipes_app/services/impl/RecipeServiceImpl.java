@@ -45,6 +45,19 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    public Recipe saveRecipe(Recipe recipe) {
+        try {
+
+            return recipeRepository.save(recipe);
+
+        } catch (NullPointerException nullPointerException) {
+
+            return null;
+
+        }
+    }
+
+    @Override
     public void deleteRecipe(Long id) {
         recipeRepository.deleteById(id);
     }

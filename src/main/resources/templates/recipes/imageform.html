@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Change recipe image</title>
+</head>
+<body>
+    <form  action="http:\\localhost" method="post" enctype="multipart/form-data"
+           th:action="@{'/recipe/update/image/' + ${recipe.id}}">
+        <label class="control-label">Select File</label>
+        <input id="imagefile" name="imagefile" type="file" class="file">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</body>
+</html>

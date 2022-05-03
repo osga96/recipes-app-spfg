@@ -10,11 +10,15 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,8 +56,7 @@ public class RecipeController {
         }
         model.addAttribute("recipe", savedRecipe);
 
-        // return "recipes/created";
-        return "recipes/recipeform";
+        return "recipes/created";
 
     }
 
@@ -84,11 +87,35 @@ public class RecipeController {
 
     @GetMapping("/recipe/image/{recipeId}")
     public void showProductImage(@PathVariable String recipeId, HttpServletResponse response) throws IOException {
-        response.setContentType(MediaType.IMAGE_JPEG_VALUE); // Or whatever format you wanna use
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 
         Recipe recipe = recipeService.getRecipeById(Long.valueOf(recipeId));
 
         InputStream is = new ByteArrayInputStream(recipe.getImage());
         IOUtils.copy(is, response.getOutputStream());
+    }
+
+    @GetMapping("/recipe/{recipeId}/update/image/form")
+    public String updateImageForm(@PathVariable String recipeId, Model model) {
+
+        Recipe recipe = recipeService.getRecipeById(Long.valueOf(recipeId));
+        model.addAttribute("recipe", recipe);
+
+        return "recipes/imageform";
+    }
+
+    @PostMapping("/recipe/update/image/{recipeId}")
+    public String updateImage(@PathVariable String recipeId, @RequestParam("imagefile") MultipartFile file){
+
+        try {
+            Recipe recipe = recipeService.getRecipeById(Long.valueOf(recipeId));
+            recipe.setImage(file.getBytes());
+
+            recipeService.saveRecipe(recipe);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "/recipes/updated";
     }
 }

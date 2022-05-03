@@ -33,6 +33,7 @@
                                         <th>Ingredients</th>
                                         <td>View</td>
                                         <td>Update</td>
+                                        <td>Update Image</td>
                                         <td>Delete</td>
                                     </tr>
                                 </thead>
@@ -51,6 +52,7 @@
                                     <td><a href="#" th:href="@{'/recipe/'  + ${recipe.id} +'/ingredients'}">View ingredients</a></td>
                                     <td><a href="#" th:href="@{'/recipe/'  + ${recipe.id} +'/show'}">View</a></td>
                                     <td><a href="#" th:href="@{'/recipe/'  + ${recipe.id} +'/update'}">Update</a></td>
+                                    <td><a href="#" th:href="@{'/recipe/'  + ${recipe.id} +'/update/image/form'}">Update image</a></td>
                                     <td><a href="#" th:href="@{'/recipe/'  + ${recipe.id} +'/delete'}">Delete</a></td>
                                 </tr>
                             </table>

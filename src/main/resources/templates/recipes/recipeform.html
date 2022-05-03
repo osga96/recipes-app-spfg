@@ -74,11 +74,6 @@
                                     <label>URL:</label>
                                     <input type="text" class="form-control" th:field="*{url}"/>
                                 </div>
-                                <div class="col-md-2 form-group">
-                                    <label>Image:</label>
-                                    <img class="card-img-top" th:src="@{'/recipe/image/' + ${id}}">
-                                    <input  type="file" id="fileupload"name="fileupload" th:field="*{image}" />
-                                </div>
                             </div>
                         </div>
                     </div>
