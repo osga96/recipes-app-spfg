@@ -22,6 +22,7 @@
                                 <thead class="thead-inverse">
                                     <tr>
                                         <th>ID</th>
+                                        <th>Image</th>
                                         <th>Description</th>
                                         <th>Prep time</th>
                                         <th>Cook time</th>
@@ -37,6 +38,7 @@
                                 </thead>
                                 <tr th:each="recipe: ${recipes}">
                                     <td th:text="${recipe.id}">123</td>
+                                    <td><img class="card-img-top" th:src="@{'recipe/image/' + ${recipe.id}}"></td>
                                     <td th:text="${recipe.description}">description</td>
                                     <td th:text="${recipe.prepTime}">prepTime</td>
                                     <td th:text="${recipe.cookTime}">cookTime</td>

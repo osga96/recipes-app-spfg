@@ -5,10 +5,16 @@ import com.example.learn.recipes_app.model.Ingredient;
 import com.example.learn.recipes_app.model.Recipe;
 import com.example.learn.recipes_app.repositories.RecipeRepository;
 import com.example.learn.recipes_app.services.RecipeService;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,8 +50,10 @@ public class RecipeController {
             model.addAttribute("errorMsg", "Null pointer exception");
             return "error/message";
         }
+        model.addAttribute("recipe", savedRecipe);
 
-        return "recipes/created";
+        // return "recipes/created";
+        return "recipes/recipeform";
 
     }
 
@@ -72,5 +80,15 @@ public class RecipeController {
         model.addAttribute("recipe", recipe);
 
         return "ingredients/list";
+    }
+
+    @GetMapping("/recipe/image/{recipeId}")
+    public void showProductImage(@PathVariable String recipeId, HttpServletResponse response) throws IOException {
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE); // Or whatever format you wanna use
+
+        Recipe recipe = recipeService.getRecipeById(Long.valueOf(recipeId));
+
+        InputStream is = new ByteArrayInputStream(recipe.getImage());
+        IOUtils.copy(is, response.getOutputStream());
     }
 }
