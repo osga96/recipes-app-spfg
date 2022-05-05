@@ -140,4 +140,14 @@ public class RecipeController {
         modelAndView.addObject("exception", exception);
         return modelAndView;
     }
+
+    @ExceptionHandler(NumberFormatException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ModelAndView handleNumberFormatException(NumberFormatException exception) {
+        log.error("The request was not specified correctly.");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("error/nfe");
+        modelAndView.addObject("exception", exception);
+        return modelAndView;
+    }
 }
