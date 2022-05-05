@@ -2,12 +2,14 @@ package com.example.learn.recipes_app.services.impl;
 
 import com.example.learn.recipes_app.commands.RecipeCommand;
 import com.example.learn.recipes_app.converters.RecipeCommandToRecipe;
+import com.example.learn.recipes_app.exceptions.NotFoundException;
 import com.example.learn.recipes_app.model.Recipe;
 import com.example.learn.recipes_app.repositories.RecipeRepository;
 import com.example.learn.recipes_app.services.RecipeService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -28,7 +30,14 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe getRecipeById(Long id) {
-        return recipeRepository.findById(id).orElse(null);
+
+        Optional<Recipe> recipeOptional = recipeRepository.findById(id);
+
+        if (recipeOptional.isEmpty()) {
+            throw new NotFoundException("The recipe with the specified ID was not found");
+        }
+
+        return recipeOptional.get();
     }
 
     @Override

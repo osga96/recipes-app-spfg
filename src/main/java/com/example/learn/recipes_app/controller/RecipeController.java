@@ -1,6 +1,7 @@
 package com.example.learn.recipes_app.controller;
 
 import com.example.learn.recipes_app.commands.RecipeCommand;
+import com.example.learn.recipes_app.exceptions.NotFoundException;
 import com.example.learn.recipes_app.model.Ingredient;
 import com.example.learn.recipes_app.model.Recipe;
 import com.example.learn.recipes_app.repositories.RecipeRepository;
@@ -33,6 +34,13 @@ public class RecipeController {
 
     @RequestMapping("/recipe/{id}/show")
     public String showById(@PathVariable String id, Model model){
+
+        // IMPORTANT: Se puede hacer de las dos maneras, desde el servicio y desde el controlador,
+        // en el curso se hace desde el servicio, con lo que lo comento aquí
+
+        /*if (recipeService.getRecipeById(Long.valueOf(id)) == null) {
+            throw new NotFoundException("The recipe with the specified ID was not found");
+        }*/
 
         model.addAttribute("recipe", recipeService.getRecipeById(Long.valueOf(id)));
         return "recipes/show";
