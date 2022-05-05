@@ -6,13 +6,16 @@ import com.example.learn.recipes_app.model.Ingredient;
 import com.example.learn.recipes_app.model.Recipe;
 import com.example.learn.recipes_app.repositories.RecipeRepository;
 import com.example.learn.recipes_app.services.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class RecipeController {
 
     private final RecipeService recipeService;
@@ -125,5 +129,15 @@ public class RecipeController {
         }
 
         return "/recipes/updated";
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ModelAndView handleNotFound(Exception exception) {
+        log.error("The recipe was not found, returning an error page.");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("error/404");
+        modelAndView.addObject("exception", exception);
+        return modelAndView;
     }
 }
