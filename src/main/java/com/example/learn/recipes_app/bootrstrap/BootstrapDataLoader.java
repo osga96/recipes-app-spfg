@@ -136,6 +136,11 @@ public class BootstrapDataLoader implements ApplicationListener<ContextRefreshed
                 .difficulty(Difficulty.MODERATE)
                 .categories(Arrays.asList(category.orElse(null), category2.orElse(null))).build();
 
+        Resource resource2 = new ClassPathResource("static/images/croquetas.jpg");
+        byte[] croquetasImage = resource2.getInputStream().readAllBytes();
+
+        recipe2.setImage(croquetasImage);
+
         recipeRepository.save(recipe2);
 
     }

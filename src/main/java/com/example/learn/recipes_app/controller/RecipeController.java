@@ -8,10 +8,12 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,17 +50,22 @@ public class RecipeController {
         return "recipes/recipeform";
     }
 
+    // IMPORTANT: Binding result debe ir inmediatamente despues de @Valid Object object
+    // IMPORTANT: @ModelAttribute("recipe"), recipe indica el nombre del objeto a validar en el template de thymeleaf
+    // IMPORTANT: No mandamos la receta mediante model, ya que en el mismo bindingResult, ya se indica qué receta tiene
+    // errores
     @PostMapping("/recipe/create/parameters")
-    public String saveOrUpdate(@ModelAttribute RecipeCommand recipeCommand, Model model) {
-        Recipe savedRecipe = recipeService.saveRecipeCommand(recipeCommand);
+    public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand recipeCommand, BindingResult result) {
 
-        if (savedRecipe == null) {
-            model.addAttribute("errorMsg", "Null pointer exception");
-            return "error/message";
+        if (result.hasErrors()) {
+            result.getAllErrors().forEach(objectError -> log.error("Error: " + objectError.toString()));
+
+            return "recipes/recipeform";
         }
-        model.addAttribute("recipe", savedRecipe);
 
-        return "recipes/created";
+        Recipe recipe = recipeService.saveRecipeCommand(recipeCommand);
+
+        return "redirect:/recipe/" + recipe.getId() + "/show";
 
     }
 
