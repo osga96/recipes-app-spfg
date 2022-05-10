@@ -63,6 +63,12 @@ public class RecipeController {
             return "recipes/recipeform";
         }
 
+        if (recipeCommand.getImage() == null) {
+            if (recipeCommand.getId() != null) {
+                recipeCommand.setImage(recipeService.getRecipeById(recipeCommand.getId()).getImage());
+            }
+        }
+
         Recipe recipe = recipeService.saveRecipeCommand(recipeCommand);
 
         return "redirect:/recipe/" + recipe.getId() + "/show";
