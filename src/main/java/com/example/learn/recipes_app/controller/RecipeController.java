@@ -1,7 +1,10 @@
 package com.example.learn.recipes_app.controller;
 
 import com.example.learn.recipes_app.commands.RecipeCommand;
+import com.example.learn.recipes_app.converters.CategoryToCategoryCommand;
+import com.example.learn.recipes_app.converters.RecipeToRecipeCommand;
 import com.example.learn.recipes_app.model.Recipe;
+import com.example.learn.recipes_app.services.CategoryService;
 import com.example.learn.recipes_app.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -23,9 +26,15 @@ import java.io.InputStream;
 public class RecipeController {
 
     private final RecipeService recipeService;
+    private final CategoryService categoryService;
+    private final CategoryToCategoryCommand categoryToCategoryCommand;
+    private final RecipeToRecipeCommand recipeToRecipeCommandConverter;
 
-    public RecipeController(RecipeService recipeService) {
+    public RecipeController(RecipeService recipeService, CategoryService categoryService, CategoryToCategoryCommand categoryToCategoryCommand, RecipeToRecipeCommand recipeToRecipeCommandConverter) {
         this.recipeService = recipeService;
+        this.categoryService = categoryService;
+        this.categoryToCategoryCommand = categoryToCategoryCommand;
+        this.recipeToRecipeCommandConverter = recipeToRecipeCommandConverter;
     }
 
     @RequestMapping("/recipe/{id}/show")
@@ -46,6 +55,7 @@ public class RecipeController {
     public String createNewRecipe(Model model) {
 
         model.addAttribute("recipe", new RecipeCommand());
+        model.addAttribute("allCategories", categoryService.getCategories());
 
         return "recipes/recipeform";
     }
@@ -69,6 +79,12 @@ public class RecipeController {
             }
         }
 
+        for (String categoryValue : recipeCommand.getCategoriesValues().split(",")) {
+            if (categoryService.getCategoryById(Long.valueOf(categoryValue)) != null) {
+                recipeCommand.getCategories().add(categoryToCategoryCommand.convert(categoryService.getCategoryById(Long.valueOf(categoryValue))));
+            }
+        }
+
         Recipe recipe = recipeService.saveRecipeCommand(recipeCommand);
 
         return "redirect:/recipe/" + recipe.getId() + "/show";
@@ -77,7 +93,8 @@ public class RecipeController {
 
     @GetMapping("/recipe/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model) {
-        model.addAttribute("recipe", recipeService.getRecipeById(Long.valueOf(id)));
+        model.addAttribute("recipe", recipeToRecipeCommandConverter.convert(recipeService.getRecipeById(Long.valueOf(id))));
+        model.addAttribute("allCategories", categoryService.getCategories());
         return "recipes/recipeform";
     }
 

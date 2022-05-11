@@ -36,7 +36,7 @@ public class Recipe {
     @JoinTable(name = "recipes_categories",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Category> categories;
+    private List<Category> categories = new ArrayList<>();
 
     public Recipe() {
     }

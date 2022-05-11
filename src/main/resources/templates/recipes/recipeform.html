@@ -34,22 +34,21 @@
                                 </div>
                             </div>
                             <div class="row">
+
                                 <div class="col-md-3 form-group">
-                                    <label>Categories:</label>
-                                </div>
-                                <div class="col-md-9 form-group">
-                                    <div class="radio">
-                                        <label>
-                                            <input type="checkbox" value=""/>
-                                            WIP Categoria 1
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="checkbox" value=""/>
-                                            WIP Categoria 2
-                                        </label>
-                                    </div>
+
+                                    All categories:
+
+                                    <select class="select form-control" th:field="*{categoriesValues}" multiple>
+                                        <option th:each="category : ${allCategories}" th:value="${category.id}" th:text="${category.categoryName}">One</option>
+                                    </select>
+
+                                    Selected categories:
+
+                                    <ul>
+                                        <li th:each="category : ${recipe.categories}" th:text="${category.categoryName}"></li>
+                                    </ul>
+
                                 </div>
                             </div>
                             <div class="row">

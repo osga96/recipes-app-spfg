@@ -1,6 +1,8 @@
 package com.example.learn.recipes_app.converters;
 
+import com.example.learn.recipes_app.commands.CategoryCommand;
 import com.example.learn.recipes_app.commands.RecipeCommand;
+import com.example.learn.recipes_app.model.Category;
 import com.example.learn.recipes_app.model.Recipe;
 import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;

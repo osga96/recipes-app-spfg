@@ -39,7 +39,7 @@
                                 </thead>
                                 <tr th:each="recipe: ${recipes}">
                                     <td th:text="${recipe.id}">123</td>
-                                    <td><img class="card-img-top" th:src="@{'recipe/image/' + ${recipe.id}}"></td>
+                                    <td class="col-md-1"><img class="card-img-top" th:src="@{'recipe/image/' + ${recipe.id}}"></td>
                                     <td th:text="${recipe.description}">description</td>
                                     <td th:text="${recipe.prepTime}">prepTime</td>
                                     <td th:text="${recipe.cookTime}">cookTime</td>

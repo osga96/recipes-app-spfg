@@ -40,5 +40,6 @@ public class RecipeCommand {
     private List<IngredientCommand> ingredients = new ArrayList<>();
     private Difficulty difficulty;
     private NotesCommand note;
+    private String categoriesValues;
     private List<CategoryCommand> categories = new ArrayList<>();
 }
